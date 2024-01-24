@@ -1,0 +1,63 @@
+<!-- src/app/task-list/task-list.component.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Ma Liste de Tâches
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="addTask()" #taskForm="ngForm">
+    <ion-item>
+      <ion-label position="floating">Nom de la tâche</ion-label>
+      <ion-input [(ngModel)]="newTaskName" name="taskName" type="text" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Contenu de la tâche</ion-label>
+      <ion-textarea [(ngModel)]="newTaskContent" name="taskContent" required></ion-textarea>
+    </ion-item>
+    <ion-button expand="block" type="submit" [disabled]="!taskForm.valid">Ajouter une tâche</ion-button>
+  </form>
+
+  <ion-segment [(ngModel)]="filter" (ionChange)="applyFilter()">
+    <ion-segment-button value="all">
+      <ion-label>Toutes</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="completed">
+      <ion-label>Terminées</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="pending">
+      <ion-label>À venir</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-list>
+    <ion-card *ngFor="let task of filteredTasks" [ngClass]="{'completed-animation': task.isComplete, 'task-completed': task.isComplete}">
+
+      <ion-card-header>
+        <ion-card-title>{{ task.name }}</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <div *ngIf="!task.editing">
+          <p>{{ task.content }}</p>
+          <ion-button (click)="enableEditing(task)">Modifier</ion-button>
+          <ion-button [color]="task.isComplete ? 'success' : 'medium'" (click)="markTaskAsComplete(task)">
+            {{ task.isComplete ? 'Terminée' : 'Marquer comme terminée' }}
+          </ion-button>
+          <ion-button color="danger" (click)="removeTask(task)">Supprimer</ion-button>
+        </div>
+        
+        <div *ngIf="task.editing">
+          <ion-input [(ngModel)]="task.name" placeholder="Nom de la tâche">Titre de la tâche :</ion-input>
+          <ion-input [(ngModel)]="task.content" placeholder="Contenu de la tâche">Contenu de la tâche :</ion-input>
+          <ion-button (click)="updateTask(task)">Mettre à jour</ion-button>
+          <ion-button (click)="cancelEditing(task)">Annuler</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+  
+  
+</ion-content>

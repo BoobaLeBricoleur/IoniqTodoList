@@ -1,0 +1,22 @@
+.task-completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+    transition: text-decoration 0.5s ease, opacity 0.5s ease;
+  }
+  
+  .completed-animation {
+    animation: completeTaskAnimation 0.5s ease;
+  
+    @keyframes completeTaskAnimation {
+      0% {
+        background-color: white;
+      }
+      50% {
+        background-color: lightgreen;
+      }
+      100% {
+        background-color: white;
+      }
+    }
+  }
+  

@@ -1,0 +1,7 @@
+{
+  "name": "IonicTodoList",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
